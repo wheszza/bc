@@ -8,6 +8,11 @@
 #include "graph.h"
 
 class Parser {
+    private:
+        Graph graph;
+        std::ifstream input_file;
+        std::vector<std::pair<int, int>> edges;
+        
     public:
         Parser(std::string filename) : graph(), input_file(filename) {
             read_file();
@@ -18,11 +23,8 @@ class Parser {
         Graph& get_graph() {
             return graph;
         }
+    
     private:
-        Graph graph;
-        std::ifstream input_file;
-        std::vector<std::pair<int, int>> edges;
-
         void read_file() {
             std::string edge;
             while (std::getline(input_file, edge)) {

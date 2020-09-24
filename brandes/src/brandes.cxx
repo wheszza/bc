@@ -7,9 +7,10 @@
 #include "parse.h"
 
 std::string input_file;
-std::string ouput_file;
+std::string output_file;
 
 Graph graph;
+std::vector<double> betweenness;
 
 void parse_args(int argc, char *argv[]) {
     if (argc < 3) {
@@ -20,7 +21,7 @@ void parse_args(int argc, char *argv[]) {
     }
 
     input_file = argv[1];
-    ouput_file = argv[2];
+    output_file = argv[2];
 }
 
 void parse_input() {
@@ -28,12 +29,31 @@ void parse_input() {
     graph = parser.get_graph();
 }
 
+void init() {
+    for(int index = 0; index < graph.get_number_vertices(); index++) {
+        betweenness.push_back(0);
+    }
+}
+
+void calculate_betweenness() {
+    for(int index = 0; index < graph.get_number_vertices(); index++) {
+        int s = graph.get_vertex(index);
+        DependencyCalculator dc(graph, s);
+        for(int index = 0; index < graph.get_number_vertices(); index++) {
+            int v = graph.get_vertex(index);
+            if(s != v) {
+                betweenness[index] += dc.get_dependency(index);
+            }
+        }
+    }
+}
+
 void print_graph() {
-    std::ofstream fout(ouput_file);
+    std::ofstream fout(output_file);
 
     for(int index = 0; index < graph.get_number_vertices(); index++) {
-        if (graph.has_neighbors(index)) {
-            int source = graph.get_vertex(index);
+        int source = graph.get_vertex(index);
+        if (graph.has_neighbors(source)) {
             std::vector<int> neighbors = graph.get_neighbors(source);
             for(int i = 0; i < neighbors.size(); i++)
                 fout << source << " "
@@ -42,9 +62,25 @@ void print_graph() {
     }
 }
 
+void print_betweenness() {
+    std::ofstream fout(output_file);
+
+    for (int index = 0; index < graph.get_number_vertices(); index++) {
+        int vertex = graph.get_vertex(index);
+        if (graph.has_neighbors(vertex)) {
+            fout << vertex << " "
+                << betweenness[index] << std::endl;
+        }
+    }
+}
+
 int main(int argc, char *argv[]) {
     parse_args(argc, argv);
     parse_input();
-    print_graph();
+
+    init();
+    calculate_betweenness();
+    print_betweenness();
+    //print_graph();
     return 0;
 }

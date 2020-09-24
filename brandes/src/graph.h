@@ -36,6 +36,10 @@ class Graph {
             return vertices[index];
         }
 
+        int get_index(int vertex) {
+            return map[vertex];
+        }
+        
         std::vector<int>& get_neighbors(int vertex) {
             return graph[map[vertex]];
         }
