@@ -1,5 +1,5 @@
 # brandes
-A implementation of Brandes' algorithm for calculating betweenness centrality in unweighted graphs.
+A implementation of Brandes' algorithm for calculating betweenness centrality in unweighted directed graphs.
 
 ## build
 ```bash
@@ -9,7 +9,7 @@ cmake ..
 make
 ```
 ## run
-```
+```bash
 ./brandes input.txt output.txt
 ```
 ## example
