@@ -27,6 +27,7 @@ class Parser {
     private:
         void read_file() {
             std::string edge;
+            
             while (std::getline(input_file, edge)) {
                 parse_edge(edge);
             }

@@ -20,7 +20,9 @@ class DependencyCalculator {
 
     public:
         DependencyCalculator(Graph& graph, int vertex) : graph(graph),vertex(vertex) {
-            
+            init();
+            find_num_shortest_paths();
+            calculate_dependencies();
         }
 
         double get_dependency(int index) {
@@ -55,15 +57,15 @@ class DependencyCalculator {
                         queue.push(w);
                         distance[index_w] = distance[index_v] + 1;
                     }
-                    if(distance[index_w] = distance[index_v] + 1) {
-                        num_shortest_path[index_w] += num_shortest_path[index_w];
+                    if(distance[index_w] == distance[index_v] + 1) {
+                        num_shortest_path[index_w] += num_shortest_path[index_v];
                         shortest_path_predecessor[index_w].push_back(v);
                     }
                 }
             }
         }
 
-        void calculate_dependencies_() {
+        void calculate_dependencies() {
             while(!stack.empty()) {
                 int w = stack.top();
                 int index_w = graph.get_index(w);
@@ -72,8 +74,8 @@ class DependencyCalculator {
                     int index_v = graph.get_index(v);
                     dependency[index_v] += (
                         (double) num_shortest_path[index_v] / 
-                        (double) num_shortest_path[index_v] ) * 
-                        (1 + dependency[index_v]);
+                        (double) num_shortest_path[index_w] ) * 
+                        (1 + dependency[index_w]);
                 }
             }
         }

@@ -11,8 +11,10 @@ class Graph {
         std::map<int, int> map;
         std::vector<bool> has_out_edges;
         int number_vertices;
+        
     public:
         Graph() : graph(), vertices(), number_vertices(0) {}
+
         void add_vertex(int vertex) {
             if(map.find(vertex) == map.end()) {
                 map.insert(std::pair<int, int>(vertex, number_vertices));

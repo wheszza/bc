@@ -19,9 +19,10 @@ void parse_args(int argc, char *argv[]) {
             << std::endl;
         exit(1);
     }
-
     input_file = argv[1];
     output_file = argv[2];
+    //input_file = "../data/input.txt";
+    //output_file = "../data/output.txt";
 }
 
 void parse_input() {
@@ -39,10 +40,11 @@ void calculate_betweenness() {
     for(int index = 0; index < graph.get_number_vertices(); index++) {
         int s = graph.get_vertex(index);
         DependencyCalculator dc(graph, s);
-        for(int index = 0; index < graph.get_number_vertices(); index++) {
-            int v = graph.get_vertex(index);
+        for(int i = 0; i < graph.get_number_vertices(); i++) {
+            int v = graph.get_vertex(i);
             if(s != v) {
-                betweenness[index] += dc.get_dependency(index);
+                //std::cout << s << ' '<< v<< ' '<< dc.get_dependency(i)<<std::endl;
+                betweenness[i] += dc.get_dependency(i);
             }
         }
     }
